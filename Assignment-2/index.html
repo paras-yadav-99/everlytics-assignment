@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Machine Info - Assignment-2</title>
+    <style>
+      table {
+        border-collapse: collapse;
+      }
+      td,
+      th {
+        border: 1px solid black;
+        width: 150px;
+        height: 40px;
+        text-align: center;
+      }
+      tr {
+        background: #ccc;
+      }
+      tr:nth-child(odd) {
+        background: #eee;
+      }
+      td > div {
+        white-space: pre;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Equipment-wise Details :</h2>
+    <div id="showData"></div>
+  </body>
+  <script>
+    function createTableFromJSON(array) {
+      var table = document.createElement("table"); // the table elements
+
+      var col = Object.keys(array[0]); // the columns names
+
+      // HEADER:
+      var tr = table.insertRow(-1); // the header row
+      col.forEach(function (key) {
+        var th = document.createElement("th");
+        th.textContent = key; 
+        tr.appendChild(th);
+      });
+
+      // ROWS:
+      array.forEach(function (obj) {
+        var tr = table.insertRow(-1); 
+        col.forEach(function (key) {
+          var tabCell = tr.insertCell(-1); // create a cell
+          if (Array.isArray(obj[key])) {
+            obj[key].forEach(function (subKey) {
+              var div = document.createElement("div"); 
+              div.textContent = `${subKey.Today}, ${subKey.MTD}, ${subKey.YTD}`;
+              tabCell.appendChild(div); 
+            });
+          } else {
+            tabCell.textContent = obj[key]; 
+          }
+        });
+      });
+
+      var divContainer = document.getElementById("showData");
+      divContainer.innerHTML = "";
+      divContainer.appendChild(table);
+    }
+
+    var machine_info = [
+      {
+        "Machine Name": "Auto Winding Machine",
+        "Machine ID": "machine001",
+        "Energy Consumed(kWh) {Today, MTD, YTD}": [{ "Today": 0, "MTD": 0, "YTD": 0 }],
+        "Active Power(MW)": 0,
+        "Apparent Power(MVA)": 0,
+        "Reactive Power(MVAr)": 0,
+        "Currennt(Amps)": 0,
+        "Voltage(Volts)": 0,
+        "Power Factor": 0,
+        "Idle Time {Today, MTD, YTD}": [{ "Today": 0, "MTD": 0, "YTD": 0 }],
+      },
+      {
+        "Machine Name": "Bolier Machine",
+        "Machine ID": "machine004",
+        "Energy Consumed(kWh) {Today, MTD, YTD}": [{ "Today": 0, "MTD": 0, "YTD": 0 }],
+        "Active Power(MW)": 0,
+        "Apparent Power(MVA)": 0,
+        "Reactive Power(MVAr)": 0,
+        "Currennt(Amps)": 0,
+        "Voltage(Volts)": 0,
+        "Power Factor": 0,
+        "Idle Time {Today, MTD, YTD}": [{ "Today": 0, "MTD": 0, "YTD": 0 }],
+      },
+    ];
+
+    createTableFromJSON(machine_info);
+  </script>
+</html>
